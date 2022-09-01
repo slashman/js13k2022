@@ -1,4 +1,4 @@
-const font = (s) => s + 'px Courier New';
+const font = (s) => s + 'px "Comic Sans MS"';
 
 let W = canvas.width;
 let H = canvas.height;
@@ -66,12 +66,13 @@ function renderMob(m, flip) {
   if (m.specialRender) {
     m.specialRender(ctx);
   } else {
-    Renderer.renderShapes(ctx, m.app, m.x, m.y, m.scale, 1, m.rotation, 49, 49, m.camera);
+    Renderer.renderShapes(ctx, m.app, m.x, m.y, m.scale, 1, m.rotation, 50, 50, m.camera, 'fixedToCamera');
   }
 }
 raf(function(d) {
-  ctx.fillStyle = '#012247';
+  ctx.fillStyle = '#fbe12d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  renderUI(ctx, d);
   layers.forEach(l => l.forEach(m => {
     m.u && m.u(d);
     renderMob(m);
@@ -82,5 +83,4 @@ raf(function(d) {
     s.update(d);
     s.render(ctx);
   });
-  renderUI(ctx, d);
 });

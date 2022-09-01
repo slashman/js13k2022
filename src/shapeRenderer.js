@@ -44,11 +44,11 @@ const Renderer = {
       c.translate(transPivotX, y - pivotY);
       const rotaPivotX = flip ? -pivotX : pivotX;
       c.translate(rotaPivotX, pivotY);
-      c.rotate(rotation + Math.PI / 2);
+      c.rotate(rotation);
       c.translate(-rotaPivotX, -pivotY);
       c.scale(scaleX * (flip ? -1 : 1), scale);
       const p2d = new Path2D(path);
-      c.stroke(p2d);
+      if (lineWidth > 0) c.stroke(p2d);
       if (fillStyle)
         c.fill(p2d);
       c.setTransform(1, 0, 0, 1, 0, 0);
@@ -72,7 +72,9 @@ const Renderer = {
       c.scale(scale * (flip ? -1 : 1), scale);
       c.beginPath();
       c.arc(0, 0, radius, 0, Math.PI*2);
-      c.stroke();
+      if (lineWidth > 0) {
+        c.stroke();
+      }
       c.fill();
       c.setTransform(1, 0, 0, 1, 0, 0);
     }

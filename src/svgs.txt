@@ -1,0 +1,14 @@
+SVGS
+
+Case
+<svg width=99 height=99 xmlns='http://www.w3.org/2000/svg'><circle cx=50 cy=50 r=45 fill="#efedee" stroke="#000000"/><ellipse cx=50 cy=50 rx=39 ry=34 fill="#ccbfc9" stroke="#000000"/><path d="M5 56A45 39 0 0 0 95 57Z" fill="#fc0f72" stroke="#000000"/></svg>
+
+
+Heart
+<svg width=99 height=99 xmlns='http://www.w3.org/2000/svg'><path d="M50 68Q28 60 29 44Q31 33 42 37Q48 39 50 45" fill="#ffffff" stroke="#000000"/></svg>
+
+Egg
+<svg width=99 height=99 xmlns='http://www.w3.org/2000/svg'><path d="M50 57Q42 57 39 52Q37 42 42 36Q45 32 50 30" fill="#ffffff" stroke="#000000"/><circle cx=44 cy=46 r=2 fill="#ffffff" stroke="#000000"/><circle cx=48 cy=36 r=1 fill="#ffffff" stroke="#000000"/><circle cx=54 cy=52 r=2 fill="#ffffff" stroke="#000000"/></svg>
+
+Egg countour 2
+<svg width=99 height=99 xmlns='http://www.w3.org/2000/svg'><path d="M50 56Q34 54 40 34Q44 25 50 25" fill="#ffffff" stroke="#000000"/></svg>

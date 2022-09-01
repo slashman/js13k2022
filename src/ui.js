@@ -22,8 +22,20 @@ function wrapText(txt) {
 }
 
 function format(num) {
-  return Math.round(num * 100) / 100;
+  return Math.floor(num);
 }
+
+function formatLong(num) {
+  return (Math.floor(num * 100) / 100) + 'y';
+}
+
+function healthScale(num) {
+  return num * 0.015;
+}
+
+let POOP_PLACES = [-80, -100, -120, 80, 100, 120];
+let LED_PLACES= [235, 232, 230, 245, 245, 245, 230, 232, 235];
+
 // let lastDelta = -1; // FPS
 function renderUI(c,d) {
   if (gState == 0) {
@@ -45,31 +57,54 @@ function renderUI(c,d) {
     c.fillText("by Slashie", W/2, H - 50);
     c.fillText("js13k22", W/2,H - 30);
   } else if (gState == 2 || gState == 3 || gState == 10) {
-    c.font = font(16);
+    Renderer.renderShapes(c, SHAPES.gotchi, W/2, 200, 4, 1, 0, 50, 50, undefined, true);
+    Renderer.renderShapes(c, SHAPES.heart, W/2 - 100, 170, healthScale(pet.health), 1, 0, 50, 50, undefined, true);
+    for (let i = 0; i < 9; i++) {
+      let isOn = pet.hunger > (i + 1);
+      let shape;
+      if (isOn) {
+        if (i === 4) {
+          shape = SHAPES.ledGreen;
+        } else {
+          shape = SHAPES.ledRed;
+        }
+      } else {
+        shape = SHAPES.ledOff;
+      }
+      Renderer.renderShapes(c, shape, W/2 - 160 + i * 40, LED_PLACES[i], 1, 1, 0, 50, 50, undefined, true);
+    }
+    c.font = font(24);
     c.textAlign="left"; 
-    c.fillStyle= "#ffffff";
-    c.fillText("Health: " + format(pet.health), W/2 - 30, 120);
-    c.fillText("Hunger: " + format (pet.hunger), W/2 - 30, 140);
-    c.fillText("Poop: " + (pet.hasPoop ? "Poop" : "No"), W/2 - 30, 160);
-    c.fillText("Life (years): " + format (pet.lifetime), W/2 - 30, 180);
+    c.fillStyle= "#000";
+    for (let i = 0; i < pet.poopQuantity; i++) {
+      c.fillText("💩", W/2 + POOP_PLACES[i], 190);
+    }
+    /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);
+    */
+    c.textAlign="center"; 
+    c.fillText(format (pet.lifetime), W/2, 80);
 
+    c.textAlign="left"; 
     for (let i = 0; i < petsHistory.length; i++) {
-      c.fillText("#" + (i+1) + ": " + format (petsHistory[i].lifetime), W/2 + 200, 80 + i * 20);
+      c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[i].lifetime), 20, 80 + i * 30);
     }
   }
   if (gState == 2) {
     c.font = font(16);
     c.textAlign="center"; 
-    c.fillStyle= "#ffffff";
-    c.fillText("[Enter] to feed", W/2, 220);
-    c.fillText("[Space] to clean", W/2, 240);
+    c.fillStyle= "#000";
+    if (pet.happyCounter > 0) {
+      c.fillText("Paused, starting in " + Math.floor(pet.happyCounter), W/2, 320);
+    }
+    c.fillText("[Enter] to feed", W/2, 340);
+    c.fillText("[Z] to clean poo", W/2, 360);
   } 
   if (gState == 3) {
     c.font = font(16);
     c.textAlign="center"; 
-    c.fillStyle= "#ffffff";
-    c.fillText("[X] to retry", W/2, 220);
-    c.fillText("DEATH",W/2,380);
+    c.fillStyle= "#000";
+    c.fillText(pet.deathCause,W/2,340);
+    c.fillText("[X] to retry", W/2, 360);
   }
   if (gState == 10) {
     c.fillStyle = "#000";
@@ -86,8 +121,3 @@ function renderUI(c,d) {
   }
 }
 
-let curCtxHint, curCtxTime;
-function contextHint(msg) {
-  curCtxTime = 5;
-  curCtxHint = msg;
-}
