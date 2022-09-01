@@ -58,7 +58,7 @@ class Pet extends GO {
             if (this.nextPoop < 0) {
                 this.nextPoop = rands.range(10, 20); // TODO: Scale by level
                 if (!this.poopQuantity) {
-                    this.poopQuantity = 6;
+                    this.poopQuantity = 5;
                     this.dirtyCounter = 2;
                 }
             }

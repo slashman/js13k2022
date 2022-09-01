@@ -33,7 +33,8 @@ function healthScale(num) {
   return num * 0.015;
 }
 
-let POOP_PLACES = [-80, -100, -120, 80, 100, 120];
+let POOP_PLACES_X = [90, 110, 80, 100, 120];
+let POOP_PLACES_Y = [170, 170, 190, 190, 190];
 let LED_PLACES= [235, 232, 230, 245, 245, 245, 230, 232, 235];
 
 // let lastDelta = -1; // FPS
@@ -77,12 +78,12 @@ function renderUI(c,d) {
     c.textAlign="left"; 
     c.fillStyle= "#000";
     for (let i = 0; i < pet.poopQuantity; i++) {
-      c.fillText("💩", W/2 + POOP_PLACES[i], 190);
+      c.fillText("💩", W/2 + POOP_PLACES_X[i], POOP_PLACES_Y[i]);
     }
     /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);
     */
     c.textAlign="center"; 
-    c.fillText(format (pet.lifetime), W/2, 80);
+    c.fillText(format (pet.lifetime), W/2, 90);
 
     c.textAlign="left"; 
     for (let i = 0; i < petsHistory.length; i++) {
