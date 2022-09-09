@@ -88,13 +88,16 @@ function renderUI(c,d) {
     c.fillText("✨", W/2, 52);
     
     c.font = font(24);
-    c.textAlign="left"; 
+    c.textAlign="center"; 
     c.fillStyle= "#000";
     for (let i = 0; i < pet.poopQuantity; i++) {
       c.fillText("💩", W/2 + POOP_PLACES_X[i], POOP_PLACES_Y[i]);
     }
     if (pet.poopQuantity > 0 && pet.dirtyCounter < 0) {
-      c.fillText("☠️", W/2 + 50, 90);
+      c.fillText("☠️", W/2 + 50, 100);
+    }
+    if (pet.lastFood) {
+      c.fillText(pet.lastFood, W/2 - 50, 100);
     }
 
     /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);

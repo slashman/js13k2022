@@ -1,9 +1,22 @@
 const LEVELS = [
     { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
     { shape: 'fox', scale: 0.5, nextLevelThreshold: 30 },
-    { shape: 'fox', scale: 1, nextLevelThreshold: 60 },
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 90 },
+    { shape: 'fox', scale: 0.75, nextLevelThreshold: 60 },
+    { shape: 'fox', scale: 1, nextLevelThreshold: 90 },
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 120 },
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 160, crown: ''},
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 190, crown: '' },
 ]
+
+const foods = [
+    ['🍼','🍌','🍎','🥕'],
+    ['🍇','🍈','🍉','🍊','🍋','🍍','🥭','🍏','🍐','🍑','🍒','🍓','🥝','🍅','🥥'],
+    ['🥑','🍆','🥔','🌽','🥒','🥦','🍄'],
+    ['🍞','🥐','🥨','🥞','🧀','🍔','🍟','🍕','🌭','🥪','🌮','🌯'],
+    ['🍱','🍙','🍚','🍛','🍝','🍣','🍥','🦀','🦞','🦐','🦑'],
+    ['🍦','🍧','🍨','🍩','🍪','🍰','🧁','🥧','🍬','🍯','☕'],
+    ['🍺','🥂','🍸','🍹','🍷']
+];
 
 class Pet extends GO {
     constructor (lists) {
@@ -98,6 +111,9 @@ class Pet extends GO {
         if (this.happyCounter > 0) {
             return;
         }
+        var maxFood = Math.min(this.level + 1, foods.length);
+        this.lastFood = foods[rand.range(0, maxFood)];
+        this.lastFood = this.lastFood[rand.range(0, this.lastFood.length)];
         if (this.hunger < 5) {
             playSound(5);
             this.health -= 10;
