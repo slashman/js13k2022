@@ -101,16 +101,16 @@ const SHAPES = {
     ]
   ],
   ledRed: [
-    ["C", 50, 50, 5, "", 0 , "#ff0000", "noflip"]
+    ["C", 50, 50, 10, "", 0 , "#ff0000", "noflip"]
   ],
   ledGreen: [
-    ["C", 50, 50, 5, "", 0 , "#00ff00", "noflip"]
+    ["C", 50, 50, 10, "", 0 , "#00ff00", "noflip"]
   ],
   ledYellow: [
-    ["C", 50, 50, 5, "", 0 , "#ffff00", "noflip"]
+    ["C", 50, 50, 10, "", 0 , "#ffff00", "noflip"]
   ],
   ledOff: [
-    ["C", 50, 50, 5, "", 0 , "#000000", "noflip"]
+    ["C", 50, 50, 10, "", 0 , "#000000", "noflip"]
   ],
   button: [
     ["C", 50, 50, 5, "", 0 , "#FFFACD", "noflip"]
