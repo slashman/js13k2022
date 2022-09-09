@@ -1,18 +1,22 @@
 fws = [];
 
 function wrapText(txt) {
-  wi = Math.floor((W - 270) / ctx.measureText('m').width);
+  wi = W - 270;
   y = H - (mo ? 220 : 150);
   words = txt.split(' ');
   line = '';
+  var lineLength = 0;
   while (words.length) {
     w = words.splice(0,1)[0]
-    if (line.length + w.length > wi) {
+    const wordLength = ctx.measureText(w + ' ').width;
+    if (lineLength + wordLength > wi) {
       ctx.fillText(line, 250, y);
       y += 30;
       line = '';
+      lineLength = 0;
     }
     line += w + ' ';
+    lineLength += wordLength;
     if (!words.length) {
       ctx.fillText(line, 250, y);
     }
