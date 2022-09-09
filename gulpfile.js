@@ -44,10 +44,8 @@ gulp.task('concat', function() {
   return gulp.src(
       [
         './src/consts.js',
-        './lib/zzfx.js',
-        './lib/zzfxm.js',
+        './lib/soundbox.js',
         './src/music.js',
-        './src/sfx.js',
         './src/rand.js',
         './src/geo.js',
         './src/input.js',

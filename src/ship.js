@@ -1,7 +1,7 @@
 let conversationText = "Test";
 let conversationNext;
 function showConversationFragment(app, text) {
-  playSound(5);
+  playSound(1);
   gState = 10;
   conversationApp = app;
   conversationText = text;

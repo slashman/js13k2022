@@ -39,8 +39,8 @@ typed('Enter', () => {
     }
   } else if (gState == 1) {
     zzfxX=new(window.AudioContext||webkitAudioContext);
-    playMusic(1);
-    playSound(4);
+    //playMusic(1);
+    playSound(1);
     startGame();
   } else if (gState == 2) {
     pet.feed();

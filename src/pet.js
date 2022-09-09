@@ -90,6 +90,7 @@ class Pet extends GO {
             this.hunger = 0;
             return;
         }
+        playSound(1);
         this.hunger -= 5;
     }
 
@@ -106,6 +107,7 @@ class Pet extends GO {
     }
 
     die () {
+        playSound(2);
         petsHistory.push({
             lifetime: this.lifetime
         });
