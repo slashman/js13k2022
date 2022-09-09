@@ -26,6 +26,7 @@ class Pet extends GO {
 
     checkEvo () {
         if (this.level < LEVELS.length - 1 && this.lifetime > this.nextLevelThreshold) {
+            playSound(3 + this.level % 2);
             this.level++;
             this.setupForLevel();
             this.happyCounter = 4;
@@ -86,6 +87,7 @@ class Pet extends GO {
             return;
         }
         if (this.hunger < 5) {
+            playSound(5);
             this.health -= 10;
             this.hunger = 0;
             return;
