@@ -1,5 +1,5 @@
 const LEVELS = [
-    { shape: 'egg', scale: 3, nextLevelThreshold: 15 },
+    { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
     { shape: 'fox', scale: 0.5, nextLevelThreshold: 30 },
     { shape: 'fox', scale: 1, nextLevelThreshold: 60 },
     { shape: 'fox', scale: 1.3, nextLevelThreshold: 90 },
@@ -20,6 +20,8 @@ class Pet extends GO {
         this.dirtyCounter = 0;
         this.nextLevelThreshold = 0;
         this.happyCounter = 4;
+        this.boopCounter = 0.7;
+        this.boopPhaseUp = false;
         this.level = 0;
         this.setupForLevel();
     }
@@ -49,6 +51,16 @@ class Pet extends GO {
                     this.happyCounter = 0;
                 }
                 return;
+            }
+            this.boopCounter -= d;
+            if (this.boopCounter < 0) {
+                this.boopCounter = 1;
+                if (this.boopPhaseUp) {
+                    this.y = 175;
+                } else {
+                    this.y = 180;
+                }
+                this.boopPhaseUp = !this.boopPhaseUp;
             }
 
             this.lifetime += d * 3;
