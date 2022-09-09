@@ -50,14 +50,15 @@ function renderUI(c,d) {
       c.fillText("Tap to continue",W/2,150);
     }
   } else if (gState == 1) {
-    c.font = "64px 'Brush Script MT'";
+    c.font = "64px 'Comic Sans MS'";
     c.textAlign="center"; 
     c.fillStyle= "#cf3436";
-    c.fillText("DeathGotchi",W/2,80);
+    c.fillText("TenderGotchi",W/2,80);
     c.font = font(20);
     c.fillStyle= "#000";
     c.fillText("Tap to start",W/2,150);
-    c.fillText("by @slashie_", W/2, H - 90);
+    c.fillText("Made by @slashie_", W/2, H - 120);
+    c.fillText("Art by Mateo Robayo", W/2, H - 90);
     c.fillText("Music by Ryan Malm", W/2, H - 60);
     c.fillText("js13k22", W/2,H - 30);
   } else if (gState == 2 || gState == 3 || gState == 10) {
