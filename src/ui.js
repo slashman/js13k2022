@@ -1,7 +1,5 @@
 fws = [];
 
-const ve = () => mo ? 'Tap' : 'Enter'; 
-
 function wrapText(txt) {
   wi = Math.floor((W - 270) / ctx.measureText('m').width);
   y = H - (mo ? 220 : 150);
@@ -40,11 +38,12 @@ let LED_PLACES= [235, 232, 230, 245, 245, 245, 230, 232, 235];
 // let lastDelta = -1; // FPS
 function renderUI(c,d) {
   if (gState == 0) {
-    c.font = font(18);
-    c.fillStyle= "#00ff00";
-    c.fillText("Loading...",10,50);
+    c.font = font(20);
+    c.textAlign="center"; 
+    c.fillStyle= "#000000";
+    c.fillText("Loading...",W/2,50);
     if (musicLoaded) {
-      c.fillText(ve()+ " to start",10,70);
+      c.fillText("Tap to continue",W/2,150);
     }
   } else if (gState == 1) {
     c.font = "64px 'Brush Script MT'";
@@ -52,10 +51,10 @@ function renderUI(c,d) {
     c.fillStyle= "#cf3436";
     c.fillText("DeathGotchi",W/2,80);
     c.font = font(20);
-    c.fillStyle= "#ffffff";
-    
-    c.fillText(ve()+ " to start",W/2,350);
-    c.fillText("by Slashie", W/2, H - 50);
+    c.fillStyle= "#000";
+    c.fillText("Tap to start",W/2,150);
+    c.fillText("by @slashie_", W/2, H - 90);
+    c.fillText("Music by Ryan Malm", W/2, H - 60);
     c.fillText("js13k22", W/2,H - 30);
   } else if (gState == 2 || gState == 3 || gState == 10) {
     Renderer.renderShapes(c, SHAPES.gotchi, W/2, 200, 4, 1, 0, 50, 50, undefined, true);
@@ -74,16 +73,30 @@ function renderUI(c,d) {
       }
       Renderer.renderShapes(c, shape, W/2 - 160 + i * 40, LED_PLACES[i], 1, 1, 0, 50, 50, undefined, true);
     }
+    Renderer.renderShapes(c, isDown('Enter') ? SHAPES.buttonPressed : SHAPES.button, W/2 - 100, 300, 7, 1, 0, 50, 50, undefined, true);
+    Renderer.renderShapes(c, isDown('KeyZ') ? SHAPES.buttonPressed : SHAPES.button, W/2 + 100, 300, 7, 1, 0, 50, 50, undefined, true);
+    Renderer.renderShapes(c, isDown('KeyX') ? SHAPES.buttonPressed : SHAPES.button, W/2, 40, 7, 1, 0, 50, 50, undefined, true);
+    c.font = font(32);
+    c.textAlign="center"; 
+    c.fillStyle= "#000";
+    c.fillText("🍴", W/2 - 100, 312);
+    c.fillText("🧹", W/2 + 100, 312);
+    c.fillText("✨", W/2, 52);
+    
     c.font = font(24);
     c.textAlign="left"; 
     c.fillStyle= "#000";
     for (let i = 0; i < pet.poopQuantity; i++) {
       c.fillText("💩", W/2 + POOP_PLACES_X[i], POOP_PLACES_Y[i]);
     }
+    if (pet.poopQuantity > 0 && pet.dirtyCounter < 0) {
+      c.fillText("☠️", W/2 + 50, 90);
+    }
+
     /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);
     */
     c.textAlign="center"; 
-    c.fillText(format (pet.lifetime), W/2, 90);
+    c.fillText(format (pet.lifetime), W/2, 105);
 
     c.textAlign="left"; 
     for (let i = 0; i < petsHistory.length; i++) {
@@ -91,21 +104,21 @@ function renderUI(c,d) {
     }
   }
   if (gState == 2) {
-    c.font = font(16);
-    c.textAlign="center"; 
-    c.fillStyle= "#000";
     if (pet.happyCounter > 0) {
-      c.fillText("Paused, starting in " + Math.floor(pet.happyCounter), W/2, 320);
+      c.font = font(24);
+      c.textAlign="center"; 
+      c.fillStyle= "#000";
+      c.fillText("Paused, starting in " + Math.floor(pet.happyCounter), W/2, 420);
     }
-    c.fillText("[Enter] to feed", W/2, 340);
-    c.fillText("[Z] to clean poo", W/2, 360);
+    /*c.fillText("[Enter] to feed", W/2, 340);
+    c.fillText("[Z] to clean poo", W/2, 360);*/
   } 
   if (gState == 3) {
-    c.font = font(16);
+    c.font = font(24);
     c.textAlign="center"; 
     c.fillStyle= "#000";
-    c.fillText(pet.deathCause,W/2,340);
-    c.fillText("[X] to retry", W/2, 360);
+    c.fillText(pet.deathCause,W/2, 420);
+    c.fillText("Tap the Sparkles button", W/2, 450);
   }
   if (gState == 10) {
     c.fillStyle = "#000";
@@ -118,7 +131,7 @@ function renderUI(c,d) {
     c.textAlign="left"; 
     wrapText(conversationText);
     c.textAlign="right"; 
-    c.fillText("["+ve()+"]", W - 20, H - 65);
+    c.fillText("[Tap]", W - 20, H - 65);
   }
 }
 

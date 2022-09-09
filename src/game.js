@@ -19,10 +19,10 @@ async function startGame() {
   await showConversation (makeAnimal('fox'), [
     "Hello! I'm folonfo, your pet.",
     "Death looms everywhere, don't let me die!",
-    "Feed me using [Enter], but only if my hunger is exactly 5.",
+    "Use the left button to feed me, but only if my hunger is *exactly* 5.",
     "My belly will hurt badly if you feed me before,",
     "and I'll slowly die of hunger if you let it go over.",
-    "Also remember to clean my poo with [Z],",
+    "Also remember to clean my poo using the right button,",
     "it'll damage me if you leave it there for too long",
     "Are you ready?",
   ]);
