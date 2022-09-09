@@ -5,7 +5,7 @@ function createPet(x){
   var p = new Pet([layers[2]]);
   p.x = x;
   p.y = 180;
-  p.scale = 3;
+  p.scale = 2;
   p.rotation = 0;
   return p;
 }
@@ -16,14 +16,12 @@ async function startGame() {
   mainCamera.x = pet.x;
   mainCamera.y = pet.y;
   
-  await showConversation (makeAnimal('fox'), [
-    "Hello! I'm folonfo, your pet.",
-    "Death looms everywhere, don't let me die!",
-    "Use the left button to feed me, but only if my hunger is *exactly* 5.",
-    "My belly will hurt badly if you feed me before,",
-    "and I'll slowly die of hunger if you let it go over.",
-    "Also remember to clean my poo using the right button,",
-    "it'll damage me if you leave it there for too long",
+  await showConversation (SHAPES.gato, [
+    "Hello! I am Gato, and I have a gift for you.",
+    "This is a magical egg, take good care of it and a friend will hatch out of it.",
+    "Use the left button to feed it, but only if its hunger is *exactly* 5.",
+    "Its belly will hurt badly if you feed it before, and it'll slowly die of hunger if you let it go over.",
+    "Also remember to clean its poo using the right button, it'll harm if you leave it there for too long.",
     "Are you ready?",
   ]);
   gState = 2;
