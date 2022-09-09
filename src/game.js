@@ -18,7 +18,7 @@ async function startGame() {
   
   await showConversation (makeAnimal('fox'), [
     "Hello! I'm folonfo, your pet.",
-    "Death looms everywhere, don't met me die!",
+    "Death looms everywhere, don't let me die!",
     "Feed me using [Enter], but only if my hunger is exactly 5.",
     "My belly will hurt badly if you feed me before,",
     "and I'll slowly die of hunger if you let it go over.",
