@@ -2,10 +2,10 @@ const LEVELS = [
     { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
     { shape: 'fox', scale: 0.5, nextLevelThreshold: 30 },
     { shape: 'fox', scale: 0.75, nextLevelThreshold: 60 },
-    { shape: 'fox', scale: 1, nextLevelThreshold: 90 },
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 120 },
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 160, crown: ''},
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 190, crown: '' },
+    { shape: 'fox', scale: 1, nextLevelThreshold: 90, hat: '🧢'},
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 120, hat: '🧢' },
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 160, hat: '🎩'},
+    { shape: 'fox', scale: 1.3, nextLevelThreshold: 190, hat: '👑' },
 ]
 
 const foods = [
@@ -36,6 +36,8 @@ class Pet extends GO {
         this.boopCounter = 0.7;
         this.boopPhaseUp = false;
         this.level = 0;
+        this.hat = undefined;
+        this.lastFood = undefined;
         this.setupForLevel();
     }
 
@@ -53,6 +55,7 @@ class Pet extends GO {
         this.app = SHAPES[LEVELS[this.level].shape];
         this.scale = LEVELS[this.level].scale;
         this.nextLevelThreshold = LEVELS[this.level].nextLevelThreshold;
+        this.hat = LEVELS[this.level].hat;
     }
 
     u(d) {
@@ -155,6 +158,12 @@ class Pet extends GO {
         Renderer.renderShapes(ctx,
             eyeShape,
             this.x, this.y, this.scale, 1, this.rotation, 50, 50, this.camera, 'fixedToCamera');
+        if (this.hat) {
+            ctx.font = font(24);
+            ctx.textAlign="center"; 
+            ctx.fillStyle= "#000";
+            ctx.fillText(this.hat, this.x, this.y - 20 * this.scale);
+        }
     }
 
 }
