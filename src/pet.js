@@ -133,4 +133,12 @@ class Pet extends GO {
         gState = 3;
     }
 
+    postRender (ctx) {
+        if (this.level == 0) return;
+        var eyeShape = this.health == 0 ? SHAPES.eyeDead : this.boopPhaseUp ? SHAPES.eyeNormal : SHAPES.eyeBlink;
+        Renderer.renderShapes(ctx,
+            eyeShape,
+            this.x, this.y, this.scale, 1, this.rotation, 50, 50, this.camera, 'fixedToCamera');
+    }
+
 }

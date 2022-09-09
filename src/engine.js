@@ -68,6 +68,7 @@ function renderMob(m, flip) {
   } else {
     Renderer.renderShapes(ctx, m.app, m.x, m.y, m.scale, 1, m.rotation, 50, 50, m.camera, 'fixedToCamera');
   }
+  m.postRender && m.postRender(ctx);
 }
 raf(function(d) {
   ctx.fillStyle = '#fbe12d';
