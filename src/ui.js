@@ -107,7 +107,14 @@ function renderUI(c,d) {
       c.fillText("☠️", W/2 + 50, 100);
     }
     if (pet.lastFood) {
-      c.fillText(pet.lastFood, W/2 - 50, 100);
+      let arcLength = 100;
+      let parax = W/2 - arcLength + pet.foodThrowCounter * arcLength;
+      let paraa = 0.02;
+      let parah = W/2 - arcLength / 2;
+      let parak = 5;
+      let paray = paraa * Math.pow(parax-parah,2) + parak;
+      paray += 100;
+      c.fillText(pet.lastFood, parax, paray);
     }
 
     /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);

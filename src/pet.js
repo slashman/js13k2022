@@ -73,6 +73,12 @@ class Pet extends GO {
 
     u(d) {
         this.x = W/2;
+        if (this.lastFood && this.foodThrowCounter < 1) {
+            this.foodThrowCounter += d * (1 + this.level / 3);
+            if (this.foodThrowCounter >= 1) {
+                this.lastFood = undefined;
+            }
+        }
         if (gState == 2) {
             if (this.happyCounter > 0) {
                 this.happyCounter -= d;
@@ -130,6 +136,7 @@ class Pet extends GO {
         var maxFood = Math.min(this.level + 1, foods.length);
         this.lastFood = foods[rand.range(0, maxFood)];
         this.lastFood = this.lastFood[rand.range(0, this.lastFood.length)];
+        this.foodThrowCounter = 0;
         if (this.hunger < 5) {
             playSound(5);
             this.health -= 10;
