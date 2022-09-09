@@ -20,17 +20,17 @@ function playMusic(i) {
     song.play();
 }
 
-let sfxBuffers = [];
+//let sfxBuffers = [];
 function playSound(i) {
-    if (!sfxBuffers[i]) {
+    //if (!sfxBuffers[i]) {
         var wave = musicBuffers[i].createWave();
         var audio = document.createElement("audio");
         audio.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
-        sfxBuffers[i] = audio;
-    } else {
+        //sfxBuffers[i] = audio;
+    /*} else {
         sfxBuffers[i].currentTime = 0;
-    }
-    sfxBuffers[i].play();
+    }*/
+    audio.play();
 }
 
 // Generate music...
