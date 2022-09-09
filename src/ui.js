@@ -1,8 +1,9 @@
 fws = [];
 
 function wrapText(txt) {
-  wi = W - 270;
-  y = H - (mo ? 220 : 150);
+  wi = W - (mo ? 200 : 310);
+  y = H - (mo ? 200 : 130);
+  theX = mo ? 170 : 290;
   words = txt.split(' ');
   line = '';
   var lineLength = 0;
@@ -10,15 +11,15 @@ function wrapText(txt) {
     w = words.splice(0,1)[0]
     const wordLength = ctx.measureText(w + ' ').width;
     if (lineLength + wordLength > wi) {
-      ctx.fillText(line, 250, y);
-      y += 30;
+      ctx.fillText(line, theX, y);
+      y += mo ? 30 : 40;
       line = '';
       lineLength = 0;
     }
     line += w + ' ';
     lineLength += wordLength;
     if (!words.length) {
-      ctx.fillText(line, 250, y);
+      ctx.fillText(line, theX, y);
     }
   }
 }
@@ -106,9 +107,11 @@ function renderUI(c,d) {
     c.textAlign="center"; 
     c.fillText(format (pet.lifetime), W/2, 105);
 
-    c.textAlign="left"; 
-    for (let i = 0; i < petsHistory.length; i++) {
-      c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[i].lifetime), 20, 80 + i * 30);
+    if (gState != 10) {
+      c.textAlign= mo ? "center": "left"; 
+      for (let i = 0; i < petsHistory.length; i++) {
+        c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[i].lifetime), mo ? W / 2 : 20, (mo ? 600 : 80) + i * 30);
+      }
     }
   }
   if (gState == 2) {
@@ -133,8 +136,13 @@ function renderUI(c,d) {
     c.globalAlpha = 0.5;
     c.fillRect(0, H - (mo ? 250 : 180), W, (mo ? 195 : 125));
     c.globalAlpha = 1;
-    Renderer.renderShapes(c, conversationApp, 150, H - (mo ? 190 : 120), 2, 1, -Math.PI / 2, 49, 49, undefined, true);
-    c.font = font(24);
+    if (mo) {
+      Renderer.renderShapes(c, conversationApp, 80, H - 180, 2, 1, 0, 49, 49, undefined, true);
+      c.font = font(24);
+    } else {
+      Renderer.renderShapes(c, conversationApp, 150, H - 120, 4, 1, 0, 49, 49, undefined, true);
+      c.font = font(36);
+    }
     c.fillStyle= "#FFF";
     c.textAlign="left"; 
     wrapText(conversationText);
