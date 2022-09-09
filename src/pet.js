@@ -82,7 +82,7 @@ class Pet extends GO {
             this.lifetime += d * 3;
 
             this.checkEvo();
-            this.hunger += d * 5;
+            this.hunger += d * (5 + this.level / 2);
             this.nextPoop -= d;
             if (this.nextPoop < 0) {
                 this.nextPoop = rands.range(10, 20); // TODO: Scale by level
