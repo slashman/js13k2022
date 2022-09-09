@@ -23,7 +23,7 @@ var pressedCallbacks = {};
 
 var canvas = document.querySelector('canvas');
 canvas.onclick = e => {
-  if (gState != 2 && gState != 3) {
+  if (gState != 1 && gState != 2 && gState != 3) {
     typedCallbacks['Enter']()
     return;
   }
@@ -35,8 +35,9 @@ canvas.onclick = e => {
 sk = e => {
   x = (e.pageX - canvas.offsetLeft) * canvasScale;
   y = (e.pageY - canvas.offsetTop) * canvasScale;
-  if (y < 100)
+  if (y < 100 && gState != 1) {
       return 'KeyX';
+  }
   if (x < W / 2) {
     return 'Enter';
   }

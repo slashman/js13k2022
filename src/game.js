@@ -2,12 +2,37 @@
 var pet;
 
 function createPet(x){
-  var p = new Pet([layers[2]]);
+  var p = new Pet(selectedEgg, [layers[2]]);
   p.x = x;
   p.y = 180;
   p.scale = 2;
   p.rotation = 0;
   return p;
+}
+
+// Coil thing
+if(document.monetization) {
+  function checkMon() {
+    if (document.monetization.state === 'started') {
+      activateCoilPowerup();
+      return true;
+    }
+    return false;
+  }
+  if (!checkMon()) {
+    document.monetization.addEventListener('monetizationstart', checkMon);
+  }
+}
+
+let isSubscriber = false;
+let selectedEgg = 0;
+let subscriberMessage1 = "";
+let subscriberMessage2 = "";
+
+function activateCoilPowerup() {
+  subscriberMessage1 = 'Thank you for subscribing.';
+  subscriberMessage2 = 'You have access to the Purple egg!';
+  isSubscriber = true;
 }
 
 async function startGame() {
@@ -31,14 +56,11 @@ async function startGame() {
 typed('Enter', () => {
   if (gState == 0) {
     if (musicLoaded) {
-      // zzfxX - the common audio context
-      zzfxX=new(window.AudioContext||webkitAudioContext);
       title()
     }
   } else if (gState == 1) {
-    zzfxX=new(window.AudioContext||webkitAudioContext);
-    //playMusic(1);
     playSound(1);
+    selectedEgg = 0;
     startGame();
   } else if (gState == 2) {
     pet.feed();
@@ -51,11 +73,23 @@ typed('Enter', () => {
 typed('KeyZ', () => {
   if (gState == 2) {
     pet.clean();
+  } else if (gState == 1) {
+    if (!isSubscriber) {
+      subscriberMessage1 = 'This egg is only available for subscribers!';
+      subscriberMessage2 = 'Please visit coil.com to activate your subscription :)';
+      return;
+    }
+    playSound(1);
+    selectedEgg = 1;
+    startGame();
   }
+
 });
 
 let petsHistory = [];
-const petHistoryData = localStorage.getItem("deathgotchi.history");
+petsHistory[0] = [];
+petsHistory[1] = [];
+const petHistoryData = localStorage.getItem("deathgotchi.history.2");
 if (petHistoryData) {
   petsHistory = JSON.parse(petHistoryData);
 }

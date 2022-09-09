@@ -57,7 +57,15 @@ function renderUI(c,d) {
     c.fillText("TenderGotchi",W/2,80);
     c.font = font(20);
     c.fillStyle= "#000";
-    c.fillText("Tap to start",W/2,150);
+    c.fillText("Select a magic egg",W/2,150);
+
+    Renderer.renderShapes(c, SHAPES.egg, W/2 - 100, 300, 3, 1, 0, 50, 50, undefined, true);
+    Renderer.renderShapes(c, isSubscriber ? SHAPES.lizardEgg : SHAPES.disabledEgg, W/2 + 100, 300, 3, 1, 0, 50, 50, undefined, true);
+
+    c.fillStyle= "#000";
+    c.fillText(subscriberMessage1,W/2,380);
+    c.fillText(subscriberMessage2,W/2,410);
+    
     c.fillText("Made by @slashie_", W/2, H - 120);
     c.fillText("Art by Mateo Robayo", W/2, H - 90);
     c.fillText("Music by Ryan Malm", W/2, H - 60);
@@ -109,8 +117,8 @@ function renderUI(c,d) {
 
     if (gState != 10) {
       c.textAlign= mo ? "center": "left"; 
-      for (let i = 0; i < petsHistory.length; i++) {
-        c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[i].lifetime), mo ? W / 2 : 20, (mo ? 600 : 80) + i * 30);
+      for (let i = 0; i < petsHistory[selectedEgg].length; i++) {
+        c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[selectedEgg][i].lifetime), mo ? W / 2 : 20, (mo ? 600 : 80) + i * 30);
       }
     }
   }
@@ -141,7 +149,7 @@ function renderUI(c,d) {
       c.font = font(24);
     } else {
       Renderer.renderShapes(c, conversationApp, 150, H - 120, 4, 1, 0, 49, 49, undefined, true);
-      c.font = font(36);
+      c.font = font(28);
     }
     c.fillStyle= "#FFF";
     c.textAlign="left"; 

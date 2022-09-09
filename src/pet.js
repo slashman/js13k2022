@@ -1,11 +1,22 @@
 const LEVELS = [
-    { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
-    { shape: 'fox', scale: 0.5, nextLevelThreshold: 30 },
-    { shape: 'fox', scale: 0.75, nextLevelThreshold: 60 },
-    { shape: 'fox', scale: 1, nextLevelThreshold: 90, hat: '🧢'},
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 120, hat: '🧢' },
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 160, hat: '🎩'},
-    { shape: 'fox', scale: 1.3, nextLevelThreshold: 190, hat: '👑' },
+    [
+        { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
+        { shape: 'fox', scale: 0.5, nextLevelThreshold: 30 },
+        { shape: 'fox', scale: 0.75, nextLevelThreshold: 60 },
+        { shape: 'fox', scale: 1, nextLevelThreshold: 90, hat: '🧢'},
+        { shape: 'fox', scale: 1.3, nextLevelThreshold: 120, hat: '🧢' },
+        { shape: 'fox', scale: 1.3, nextLevelThreshold: 160, hat: '🎩'},
+        { shape: 'fox', scale: 1.3, nextLevelThreshold: 190, hat: '👑' },
+    ],
+    [
+        { shape: 'lizardEgg', scale: 2, nextLevelThreshold: 25 },
+        { shape: 'lizard', scale: 0.3, nextLevelThreshold: 40 },
+        { shape: 'lizard', scale: 0.5, nextLevelThreshold: 80 },
+        { shape: 'lizard', scale: 0.8, nextLevelThreshold: 120, hat: '👒'},
+        { shape: 'lizard', scale: 0.9, nextLevelThreshold: 160, hat: '🎓' },
+        { shape: 'lizard', scale: 1, nextLevelThreshold: 180},
+        { shape: 'lizard', scale: 1, nextLevelThreshold: 220, hat: '👑' },
+    ]
 ]
 
 const foods = [
@@ -19,8 +30,9 @@ const foods = [
 ];
 
 class Pet extends GO {
-    constructor (lists) {
+    constructor (eggIndex, lists) {
         super('egg', lists);
+        this.levels = LEVELS[eggIndex];
         this.reset();
     }
 
@@ -39,10 +51,11 @@ class Pet extends GO {
         this.hat = undefined;
         this.lastFood = undefined;
         this.setupForLevel();
+        seeded = LCG(13312 + selectedEgg * 20);
     }
 
     checkEvo () {
-        if (this.level < LEVELS.length - 1 && this.lifetime > this.nextLevelThreshold) {
+        if (this.level < this.levels.length - 1 && this.lifetime > this.nextLevelThreshold) {
             playSound(3 + this.level % 2);
             this.level++;
             this.setupForLevel();
@@ -52,10 +65,10 @@ class Pet extends GO {
     }
 
     setupForLevel () {
-        this.app = SHAPES[LEVELS[this.level].shape];
-        this.scale = LEVELS[this.level].scale;
-        this.nextLevelThreshold = LEVELS[this.level].nextLevelThreshold;
-        this.hat = LEVELS[this.level].hat;
+        this.app = SHAPES[this.levels[this.level].shape];
+        this.scale = this.levels[this.level].scale;
+        this.nextLevelThreshold = this.levels[this.level].nextLevelThreshold;
+        this.hat = this.levels[this.level].hat;
     }
 
     u(d) {
@@ -85,9 +98,9 @@ class Pet extends GO {
             this.hunger += d * (5 + this.level / 2);
             this.nextPoop -= d;
             if (this.nextPoop < 0) {
-                this.nextPoop = rands.range(10, 20); // TODO: Scale by level
+                this.nextPoop = rands.range(selectedEgg == 0 ? 10 : 5, 15);
                 if (!this.poopQuantity) {
-                    this.poopQuantity = 5;
+                    this.poopQuantity = rands.range(selectedEgg == 0 ? 2 : 4, 5);
                     this.dirtyCounter = 2;
                 }
             }
@@ -141,23 +154,25 @@ class Pet extends GO {
 
     die () {
         playSound(2);
-        petsHistory.push({
+        petsHistory[selectedEgg].push({
             lifetime: this.lifetime
         });
-        petsHistory.sort((a,b) => { return b.lifetime - a.lifetime});
-        if (petsHistory.length > 10) {
-            petsHistory.length = 10;
+        petsHistory[selectedEgg].sort((a,b) => { return b.lifetime - a.lifetime});
+        if (petsHistory[selectedEgg].length > 10) {
+            petsHistory[selectedEgg].length = 10;
         }
-        localStorage.setItem("deathgotchi.history", JSON.stringify(petsHistory));
+        localStorage.setItem("deathgotchi.history.2", JSON.stringify(petsHistory));
         gState = 3;
     }
 
     postRender (ctx) {
         if (this.level == 0) return;
-        var eyeShape = this.health == 0 ? SHAPES.eyeDead : this.boopPhaseUp ? SHAPES.eyeNormal : SHAPES.eyeBlink;
-        Renderer.renderShapes(ctx,
-            eyeShape,
-            this.x, this.y, this.scale, 1, this.rotation, 50, 50, this.camera, 'fixedToCamera');
+        if (selectedEgg == 0) {
+            var eyeShape = this.health == 0 ? SHAPES.eyeDead : this.boopPhaseUp ? SHAPES.eyeNormal : SHAPES.eyeBlink;
+            Renderer.renderShapes(ctx,
+                eyeShape,
+                this.x, this.y, this.scale, 1, this.rotation, 50, 50, this.camera, 'fixedToCamera');
+        }
         if (this.hat) {
             ctx.font = font(24);
             ctx.textAlign="center"; 
