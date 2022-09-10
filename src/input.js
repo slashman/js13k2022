@@ -35,7 +35,15 @@ canvas.onclick = e => {
 sk = e => {
   x = (e.pageX - canvas.offsetLeft) * canvasScale;
   y = (e.pageY - canvas.offsetTop) * canvasScale;
-  if (y < 100 && gState != 1) {
+  if (gState == 1) {
+    if (x < (W / 2) - 50) {
+      return 'KeyA';
+    } else if (x > (W / 2) + 50) {
+      return 'KeyC';
+    }
+    return 'KeyB';
+  }
+  if (y < 100) {
       return 'KeyX';
   }
   if (x < W / 2) {

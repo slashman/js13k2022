@@ -46,9 +46,10 @@ function renderUI(c,d) {
     c.font = font(20);
     c.textAlign="center"; 
     c.fillStyle= "#000000";
-    c.fillText("Loading...",W/2,50);
     if (musicLoaded) {
       c.fillText("Tap to continue",W/2,150);
+    } else {
+      c.fillText("Loading...",W/2,150);
     }
   } else if (gState == 1) {
     c.font = "64px 'Comic Sans MS'";
@@ -60,8 +61,21 @@ function renderUI(c,d) {
     c.fillText("Select a magic egg",W/2,150);
 
     Renderer.renderShapes(c, SHAPES.egg, W/2 - 100, 300, 3, 1, 0, 50, 50, undefined, true);
-    Renderer.renderShapes(c, isSubscriber ? SHAPES.lizardEgg : SHAPES.disabledEgg, W/2 + 100, 300, 3, 1, 0, 50, 50, undefined, true);
-
+    if (isSubscriber) {
+      Renderer.renderShapes(c, SHAPES.lizardEgg, W/2, 300, 3, 1, 0, 50, 50, undefined, true);
+      Renderer.renderShapes(c, SHAPES.egg, W/2 + 100, 300, 3, 1, 0, 50, 50, undefined, true);
+      c.fillStyle= "#000";
+      c.font = font(20);
+      c.fillText("Chill", W/2 + 100, 280);
+    } else {
+      Renderer.renderShapes(c, SHAPES.disabledEgg, W/2, 300, 3, 1, 0, 50, 50, undefined, true);
+      Renderer.renderShapes(c, SHAPES.disabledEgg, W/2 + 100, 300, 3, 1, 0, 50, 50, undefined, true);
+      c.fillStyle= "#FFF";
+      c.font = font(40);
+      c.fillText("?", W/2, 300);
+      c.fillText("?", W/2 + 100, 300);
+    }
+    c.font = font(20);
     c.fillStyle= "#000";
     c.fillText(subscriberMessage1,W/2,380);
     c.fillText(subscriberMessage2,W/2,410);
@@ -111,7 +125,7 @@ function renderUI(c,d) {
     c.textAlign="center"; 
     c.fillText(format (pet.lifetime), W/2, 105);
 
-    if (gState != 10) {
+    if (gState != 10 && !gabyMode) {
       c.textAlign= mo ? "center": "left"; 
       for (let i = 0; i < petsHistory[selectedEgg].length; i++) {
         c.fillText("#" + (i+1) + ": " + formatLong (petsHistory[selectedEgg][i].lifetime), mo ? W / 2 : 20, (mo ? 600 : 80) + i * 30);

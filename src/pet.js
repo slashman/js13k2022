@@ -1,3 +1,5 @@
+let gabyMode = false;
+
 const LEVELS = [
     [
         { shape: 'egg', scale: 2, nextLevelThreshold: 15 },
@@ -91,10 +93,21 @@ class Pet extends GO {
                 this.boopPhaseUp = !this.boopPhaseUp;
             }
 
-            this.lifetime += d * 3;
+            if (gabyMode) {
+                this.lifetime += (d / 5);
+            } else {
+                this.lifetime += d * 3;
+            }
 
             this.checkEvo();
-            this.hunger += d * (5 + this.level / 2);
+            if (gabyMode) {
+                this.hunger += d;
+                if (this.hunger > 6) {
+                    this.hunger = 6;
+                }
+            } else {
+                this.hunger += d * (5 + this.level / 2);
+            }
             this.nextPoop -= d;
             if (this.nextPoop < 0) {
                 this.nextPoop = rands.range(selectedEgg == 0 ? 10 : 5, 15);
@@ -104,13 +117,13 @@ class Pet extends GO {
                 }
             }
             this.deathCause = "OVERSTUFFED";
-            if (this.hunger > 5) {
+            if (this.hunger > 5 && !gabyMode) {
                 this.health -= d * 10;
                 this.deathCause = "STARVED";
             }
             if (this.poopQuantity > 0) {
                 this.dirtyCounter -= d;
-                if (this.dirtyCounter < 0) {
+                if (this.dirtyCounter < 0 && !gabyMode) {
                     this.health -= d * 20; 
                     this.deathCause = "POISONED";
                 }
@@ -130,7 +143,7 @@ class Pet extends GO {
         let food = foods[rand.range(0, maxFood)];
         food = food[rand.range(0, food.length)];
         new Food(food, [layers[1]]);
-        if (this.hunger < 5) {
+        if (this.hunger < 5 && !gabyMode) {
             playSound(5);
             this.health -= 10;
             this.hunger = 0;
@@ -138,6 +151,7 @@ class Pet extends GO {
         }
         playSound(1);
         this.hunger -= 5;
+        if (this.hunger < 0) { this.hunger = 0; }
     }
 
     clean () {
