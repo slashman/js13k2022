@@ -49,7 +49,6 @@ class Pet extends GO {
         this.boopPhaseUp = false;
         this.level = 0;
         this.hat = undefined;
-        this.lastFood = undefined;
         this.setupForLevel();
         seeded = LCG(13312 + selectedEgg * 20);
     }
@@ -73,12 +72,6 @@ class Pet extends GO {
 
     u(d) {
         this.x = W/2;
-        if (this.lastFood && this.foodThrowCounter < 1) {
-            this.foodThrowCounter += d * (1 + this.level / 3);
-            if (this.foodThrowCounter >= 1) {
-                this.lastFood = undefined;
-            }
-        }
         if (gState == 2) {
             if (this.happyCounter > 0) {
                 this.happyCounter -= d;
@@ -134,9 +127,9 @@ class Pet extends GO {
             return;
         }
         var maxFood = Math.min(this.level + 1, foods.length);
-        this.lastFood = foods[rand.range(0, maxFood)];
-        this.lastFood = this.lastFood[rand.range(0, this.lastFood.length)];
-        this.foodThrowCounter = 0;
+        let food = foods[rand.range(0, maxFood)];
+        food = food[rand.range(0, food.length)];
+        new Food(food, [layers[1]]);
         if (this.hunger < 5) {
             playSound(5);
             this.health -= 10;

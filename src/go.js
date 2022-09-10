@@ -23,3 +23,32 @@ class GO {
 }
 
 // Add things extending GO here
+
+class Food extends GO {
+  constructor (emoji, lists) {
+    super('ledOff', lists);
+    this.emoji = emoji;
+    this.arcCounter = 0;
+  }
+
+  u (d) {
+    if (this.arcCounter > 1) {
+      this.destroy();
+      return;
+    }
+
+    let arcLength = 100;
+    this.x = W/2 - arcLength + this.arcCounter * arcLength;
+    let paraa = 0.02;
+    let parah = W/2 - arcLength / 2;
+    let parak = 5;
+    this.y = paraa * Math.pow(this.x-parah,2) + parak;
+    this.y += 100;
+
+    this.arcCounter += d;
+  }
+
+  specialRender (c) {
+    c.fillText(this.emoji, this.x, this.y);
+  }
+}
