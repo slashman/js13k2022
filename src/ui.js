@@ -120,6 +120,9 @@ function renderUI(c,d) {
     if (pet.poopQuantity > 0 && pet.dirtyCounter < 0) {
       c.fillText("☠️", W/2 + 50, 100);
     }
+    if (pet.sparklesOn) {
+      c.fillText("✨", W/2 - 50, 100);
+    }
     /*c.fillText("Happy:  " + happyBar(pet.happyCounter), W/2 - 30, 120);
     */
     c.textAlign="center"; 

@@ -131,7 +131,9 @@ if (petHistoryData) {
 }
 
 typed('KeyX', () => {
-  if (gState == 3) {
+  if (gState == 2 && gabyMode && pet.sparklesOn) {
+    pet.doTheEvo();
+  } else if (gState == 3) {
     pet.reset();
     gState = 2;
   }

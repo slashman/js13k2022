@@ -46,9 +46,14 @@ class Pet extends GO {
         this.poopQuantity = 0;
         this.dirtyCounter = 0;
         this.nextLevelThreshold = 0;
-        this.happyCounter = 4;
+        if (gabyMode) {
+            this.happyCounter = 0;
+        } else {
+            this.happyCounter = 4;
+        }
         this.boopCounter = 0.7;
         this.boopPhaseUp = false;
+        this.sparklesOn = false;
         this.level = 0;
         this.hat = undefined;
         this.setupForLevel();
@@ -57,12 +62,25 @@ class Pet extends GO {
 
     checkEvo () {
         if (this.level < this.levels.length - 1 && this.lifetime > this.nextLevelThreshold) {
-            playSound(3 + this.level % 2);
-            this.level++;
-            this.setupForLevel();
-            this.happyCounter = 4;
-            this.hunger = 0;
+            if (gabyMode) {
+                this.sparklesOn = true;
+            } else {
+                this.doTheEvo();
+            }
         }
+    }
+
+    doTheEvo () {
+        playSound(3 + this.level % 2);
+        this.level++;
+        this.setupForLevel();
+        if (gabyMode) {
+            this.sparklesOn = false;
+            this.happyCounter = 0;
+        } else {
+            this.happyCounter = 4;
+        }
+        this.hunger = 0;
     }
 
     setupForLevel () {
@@ -93,9 +111,7 @@ class Pet extends GO {
                 this.boopPhaseUp = !this.boopPhaseUp;
             }
 
-            if (gabyMode) {
-                this.lifetime += (d / 5);
-            } else {
+            if (!gabyMode) {
                 this.lifetime += d * 3;
             }
 
@@ -136,7 +152,7 @@ class Pet extends GO {
     }
 
     feed () {
-        if (this.happyCounter > 0) {
+        if (this.happyCounter > 0 || this.sparklesOn) {
             return;
         }
         var maxFood = Math.min(this.level + 1, foods.length);
@@ -148,6 +164,11 @@ class Pet extends GO {
             this.health -= 10;
             this.hunger = 0;
             return;
+        }
+        if (gabyMode) {
+            if (this.poopQuantity == 0) {
+                this.lifetime += 0.2;
+            }
         }
         playSound(1);
         this.hunger -= 5;
